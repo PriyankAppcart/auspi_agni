@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:auspi_agni_flutter/App_logic/advanced_panchang_model.dart';
 import 'package:auspi_agni_flutter/App_logic/commonStorage.dart';
@@ -18,9 +19,17 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 
 class app_logic_controller extends GetxController{
+
+  // bool isDarkMode = false;
+
+  // void toggleTheme() {
+  //   isDarkMode = !isDarkMode;
+
+  // }
+  var isDarkMode = false.obs; // Changed to RxBool for reactivity
+  bool _isUserThemeSet = false; // Track if user has manually set theme
 
   /*
   * GPS DATA
@@ -269,7 +278,8 @@ class app_logic_controller extends GetxController{
     super.onInit();
 
     await LocalNotificationService.configureLocalTimeZone();
-    print("TimeZone${commonStorage.box.read('TimeZone')}");
+    await initializeTheme();
+    print("TimeZone---------${commonStorage.box.read('TimeZone')}");
     checkGps();
    var notify_permission= _notificationsPlugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>()!.requestNotificationsPermission();
@@ -541,6 +551,51 @@ if(Agni_hand>=360.0)
 
 
   }
+// Initialize theme based on system or stored preference
+  Future<void> initializeTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    // Check if user has manually set a theme
+    final storedTheme = prefs.getString('theme');
+    if (storedTheme != null) {
+      isDarkMode.value = storedTheme == 'dark';
+      _isUserThemeSet = true;
+    } else {
+      // Use system theme if no user preference is set
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final context = Get.context;
+        if (context != null) {
+          final brightness = MediaQuery.of(context).platformBrightness;
+          log("brightness is $brightness");
+          isDarkMode.value = brightness == Brightness.dark;
+        }
+      });
+      _isUserThemeSet = false;
+    }
+    update();
+  }
+
+  // Toggle theme and save user preference
+  void toggleTheme() {
+    isDarkMode.value = !isDarkMode.value;
+    _isUserThemeSet = true;
+    _saveThemePreference();
+    update();
+  }
+
+  // Save theme preference to SharedPreferences
+  Future<void> _saveThemePreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('theme', isDarkMode.value ? 'dark' : 'light');
+  }
+
+  // Update isDarkMode based on system theme (used by WidgetsBindingObserver)
+  void updateSystemTheme(Brightness brightness) {
+    if (!_isUserThemeSet) {
+      isDarkMode.value = brightness == Brightness.dark;
+      update();
+    }
+  }
+
 Future<void> GhatikaCalFunction()
 async {
   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

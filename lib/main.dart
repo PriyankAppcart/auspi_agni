@@ -1,4 +1,5 @@
 import 'package:auspi_agni_flutter/AppTheme.dart';
+import 'package:auspi_agni_flutter/App_logic/app_logic_controller.dart';
 import 'package:auspi_agni_flutter/App_logic/app_logic_controller_background.dart';
 import 'package:auspi_agni_flutter/App_logic/main_view.dart';
 import 'package:auspi_agni_flutter/Notifications/LocalNotificationService.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final logicController = Get.put(app_logic_controller());
     return
       LayoutBuilder(
         builder: (context, constraints) {
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
               return GetMaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Auspi Seven in One',
-                theme: AppTheme.lightTheme,
+                theme: logicController.isDarkMode.value ? AppTheme.darkTheme : AppTheme.lightTheme,
                 home: MainView(),
               );
             },
