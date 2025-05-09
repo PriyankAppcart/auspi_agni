@@ -320,7 +320,7 @@ class app_logic_controller_background extends GetxController{
      SunNksh=SunData[1];
      SunRutu=SunData[2];
      SunAyan=SunData[3];
-     Solar_deg=int.parse(SunData[5]);
+     Solar_deg=double.parse(SunData[5]).toInt();
      //Solar_deg=253;
 
       //  print(DateTime.now().timeZoneName);
