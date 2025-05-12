@@ -17,7 +17,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.auspi.agni"
+    namespace = "com.auspiwatch.agni"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -33,7 +33,7 @@ android {
 
     defaultConfig {
         
-        applicationId = "com.auspi.agni"
+        applicationId = "com.auspiwatch.agni"
        
         minSdk = 21
         targetSdk = flutter.targetSdkVersion
