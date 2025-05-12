@@ -34,9 +34,6 @@ Workmanager().registerOneOffTask("task-identifier", "simpleTask",initialDelay: D
   // await Workmanager().cancelAll();
   // print('Cancel all tasks completed');
   runApp(MyApp());
-
-
-
 }
 
 class MyApp extends StatelessWidget {

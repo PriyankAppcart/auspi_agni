@@ -1,4 +1,4 @@
-package com.auspi.agni
+package com.auspiwatch.agni
 
 import io.flutter.embedding.android.FlutterActivity
 
