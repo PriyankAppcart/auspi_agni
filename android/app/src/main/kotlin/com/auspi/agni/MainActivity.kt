@@ -1,4 +1,4 @@
-package com.example.auspi_agni_flutter
+package com.auspi.agni
 
 import io.flutter.embedding.android.FlutterActivity
 
