@@ -4,8 +4,8 @@ import 'package:auspi_agni_flutter/App_logic/app_logic_controller.dart';
 import 'package:auspi_agni_flutter/App_logic/sectetion_list.dart';
 import 'package:auspi_agni_flutter/RemoteServices/cust_text_center.dart';
 import 'package:auspi_agni_flutter/SizeConfig.dart';
+import 'package:auspi_agni_flutter/cloack_dial.dart';
 import 'package:auspi_agni_flutter/cust_text.dart';
-import 'package:auspi_agni_flutter/photosViewPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,8 +61,8 @@ class MainView extends StatelessWidget {
                           ]
                         : [
                             Color(0xFFE3F2FD),
-                            Color(0xFFBBDEFB),
-                            Color(0xFFE3F2FD),
+                            Color.fromARGB(255, 163, 206, 242),
+                            Color.fromARGB(255, 169, 219, 255),
                           ],
                   )
                 : null,
@@ -409,11 +409,12 @@ class MainView extends StatelessWidget {
                                             children: <Widget>[
                                               GestureDetector(
                                                 onTap: () {
-                                                  List<String> imgList = [
-                                                    "assets/agni.png"
-                                                  ];
-                                                  Get.to(
-                                                      PhotosViewPage(imgList));
+                                                  // List<String> imgList = [
+                                                  //   "assets/agni.png"
+                                                  // ];
+                                                  Get.to(ClockDialView(
+                                                      logicController:
+                                                          logicController));
                                                 },
                                                 child: Center(
                                                     child: Padding(
